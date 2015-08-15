@@ -1,0 +1,21 @@
+Data: 10/11/2014
+Status: Finalizada em 20/11/2014
+
+ex02a: Exemplo de plotagem de uma função senoidal composta por
+componentes de diferentes frequências (10 e 60Hz)
+
+ex02b: Exemplo de filtragem do sinal do script anterior. Deseja-se
+remover a componente de 60Hz. Para isso é utilizado um filtro
+butterworth do tipo passa-faixa (bandpass) com frequências de corte (cut
+frequency) em 0.5 e 20 Hz.
+
+Após estudar os exemplos realize a seguinte tarefa:
+Crie um script da seguinte maneira:
+1- Crie uma função senoidal com três componentes em diferentes
+frequências (exemplo: 2, 15 e 60Hz);
+2 - Filtre as componentes de 2 e 60 Hz dessa função e armazene em uma
+variável y_filt1;
+3 - Filtre as componentes de 2 e 15 Hz dessa função e armazene em uma
+variável y_filt2;
+
+

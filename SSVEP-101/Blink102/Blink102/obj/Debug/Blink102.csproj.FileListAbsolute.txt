@@ -1,0 +1,8 @@
+C:\Users\Daniel\Documents\GitHub\SSVEP-101\Blink102\Blink102\bin\Debug\Blink102.exe
+C:\Users\Daniel\Documents\GitHub\SSVEP-101\Blink102\Blink102\bin\Debug\Blink102.pdb
+C:\Users\Daniel\Documents\GitHub\SSVEP-101\Blink102\Blink102\obj\Debug\Blink102.csprojResolveAssemblyReference.cache
+C:\Users\Daniel\Documents\GitHub\SSVEP-101\Blink102\Blink102\obj\Debug\Blink102.Form1.resources
+C:\Users\Daniel\Documents\GitHub\SSVEP-101\Blink102\Blink102\obj\Debug\Blink102.Properties.Resources.resources
+C:\Users\Daniel\Documents\GitHub\SSVEP-101\Blink102\Blink102\obj\Debug\Blink102.csproj.GenerateResource.Cache
+C:\Users\Daniel\Documents\GitHub\SSVEP-101\Blink102\Blink102\obj\Debug\Blink102.exe
+C:\Users\Daniel\Documents\GitHub\SSVEP-101\Blink102\Blink102\obj\Debug\Blink102.pdb

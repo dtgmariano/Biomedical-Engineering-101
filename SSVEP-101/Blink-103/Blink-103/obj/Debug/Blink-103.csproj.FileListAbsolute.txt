@@ -1,0 +1,8 @@
+C:\Users\Daniel\Documents\GitHub\SSVEP-101\Blink-103\Blink-103\bin\Debug\Blink-103.exe
+C:\Users\Daniel\Documents\GitHub\SSVEP-101\Blink-103\Blink-103\bin\Debug\Blink-103.pdb
+C:\Users\Daniel\Documents\GitHub\SSVEP-101\Blink-103\Blink-103\obj\Debug\Blink-103.csprojResolveAssemblyReference.cache
+C:\Users\Daniel\Documents\GitHub\SSVEP-101\Blink-103\Blink-103\obj\Debug\Blink_103.Form1.resources
+C:\Users\Daniel\Documents\GitHub\SSVEP-101\Blink-103\Blink-103\obj\Debug\Blink_103.Properties.Resources.resources
+C:\Users\Daniel\Documents\GitHub\SSVEP-101\Blink-103\Blink-103\obj\Debug\Blink-103.csproj.GenerateResource.Cache
+C:\Users\Daniel\Documents\GitHub\SSVEP-101\Blink-103\Blink-103\obj\Debug\Blink-103.exe
+C:\Users\Daniel\Documents\GitHub\SSVEP-101\Blink-103\Blink-103\obj\Debug\Blink-103.pdb

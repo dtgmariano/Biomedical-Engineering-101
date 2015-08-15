@@ -1,0 +1,98 @@
+%Biomedical Engineering Laboratory
+%Federal University of Uberlândia - MG/Brazil
+%Author: Daniel Teodoro G Mariano
+%Info: Script to process EEG data
+
+clear all
+clc
+
+%Filter Configurations
+Fs = 240;
+Ts = 1/Fs;
+
+fc1low = 0.5;
+fc1high = 30;
+w1low = fc1low/(Fs/2);
+w1high = fc1high/(Fs/2);
+Wn1 = [w1low w1high];
+n1 = 5;
+[b1, a1] = butter(n1, Wn1,'bandpass');
+
+fc2high = 30;
+w2high = fc2high/(Fs/2);
+Wn2 = w2high;
+n2 = 5;
+[b2, a2] = butter(n2, Wn2, 'low');
+
+threshold = [800, 1000, 2000, 1000, 500, 2000, 1000, 500, 2000, 2000, 1000, 800, 2000, 1000];
+minIntervalP2 = [90, 100,100, 90, 70, 50,100,100,100,100, 80, 70,100,100];
+maxIntervalP2 = [120,120,200,110,100,100,125,150,150,150,120,100,150,150];
+
+for indexFile=1:1
+%  indexFile = 3;
+    folderPath = 'C:\Users\Biolab\Dropbox\Data\EEG_PEV_Coletas\';
+    filePath = getFilePath(indexFile);
+    eegData = funcReadPLG(strcat(folderPath,filePath));
+
+    %Data configuration
+    eegChannels = ['F7 ';'T3 ';'T5 ';'Fp1';'F3 ';
+                   'C3 ';'P3 ';'O1 ';'F8 ';'T4 ';
+                   'T6 ';'Fp2';'F4 ';'C4 ';'P4 ';
+                   'O2 ';'Fz ';'Cz ';'Pz ';'Oz ';
+                   'A1 ';'A2 ';'Tgg'];
+    channelsList = [8, 16, 20];
+
+    %Detecta os pontos de disparo do trigger
+    trigger = eegData(23,:);
+    tggList = getTriggerPointsList(trigger);
+    
+    %Filtra o sinal original
+    y_o1 = filtfilt(b1,a1,eegData(8,:));
+    y_o2 = filtfilt(b1,a1,eegData(16,:));
+    y_oz = filtfilt(b1,a1,eegData(20,:));
+    y_fp1 = filtfilt(b1,a1,eegData(4,:));
+    y_fp2 = filtfilt(b1,a1,eegData(12,:));
+    
+%     figure(indexFile)
+%     subplot(3,1,1)
+%     plot(y_fp1);
+%     grid on
+%     subplot(3,1,2)
+%     plot(y_fp2)
+%     title(strcat('',filePath))
+%     grid on
+%     subplot(3,1,3)
+%     plot(trigger);
+
+%    [ epoch_window_o1, epoch_window_o2, epoch_window_oz, epoch_window_pz ] = dataWindowing(Ts, tggList, y_o1, y_o2, y_oz, y_pz);
+    
+    limitValue = threshold(indexFile);
+    %limitValue = 200;
+    windowSize = 0.3;
+    
+    [ ew_o1, ew_o2, ew_oz, ewl_o1, ewl_o2, ewl_oz, blinkPoints, epochPoints ] = dataWindowingL2(limitValue, windowSize, Ts, tggList, y_o1, y_o2, y_oz, y_fp1, y_fp2);
+    
+    blinkCounter(indexFile) = size(blinkPoints,2);
+    epochCounter(indexFile) = size(epochPoints,2);
+    tggCounter(indexFile) = size(tggList,2);
+    
+    %Filtra o sinal resultante
+    few_o1 = filtfilt(b2,a2,ew_o1);
+    few_o2 = filtfilt(b2,a2,ew_o2);
+    few_oz = filtfilt(b2,a2,ew_oz);
+    fewl_o1 = filtfilt(b2,a2,ewl_o1);
+    fewl_o2 = filtfilt(b2,a2,ewl_o2);
+    fewl_oz = filtfilt(b2,a2,ewl_oz);
+    
+    wind_x = (1:size(few_o1,2))*Ts*1000;
+    
+    lmin = round((minIntervalP2(indexFile))/(1000*Ts));
+    lmax = round((maxIntervalP2(indexFile))/(1000*Ts));
+    
+    outputFilePath = strcat('Out\',filePath(15:15),'Hz','_',filePath(1:2),'.bmp');
+    hasSave = false;
+    plotGraphs(hasSave, outputFilePath, lmin, lmax, wind_x, few_o1, few_o2, few_oz, fewl_o1, fewl_o2, fewl_oz, trigger )
+end
+
+% counterFilePath = 'Out\counters.txt';
+% writeCounter(counterFilePath, tggCounter, blinkCounter, epochCounter);

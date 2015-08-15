@@ -1,0 +1,25 @@
+Data: 28/11/2014
+Status: Pendente
+
+Crie um script que faça as seguintes tarefas:
+
+1 - Faça a leitura de um arquivo .PLG (...Script\Data\p1_trial1_freq1.PLG).
+
+2 - Armazene os dados de um dos canais (derivação O1: Canal 6) em uma variável.
+
+3 - Aplique um filtro passa faixa para as frequencias de corte em 0,5 Hz e 30 Hz.
+
+4 - Apresente os seguintes gráficos:
+	a) Sinal antes da filtragem
+	b) Sinal após a filtragem
+	c) Trigger
+
+5 - Recorte o intervalo onde ocorreu a atividade de fotoestimulação (Observar em qual momento ocorreu atividade do Trigger conforme o exemplo 01)
+
+6 - Apresente os seguintes gráficos:
+	a) Sinal após a filtragem após o corte
+	b) Trigger*
+
+obs*.: Recortar o sinal do canal "Trigger" no mesmo intervalo em que o sinal de o1 foi recortado.
+
+PS.: Sempre que for escrever algum caminho de pasta utilize a função 'pwd'. Essa função retorna o local da pasta atual do projeto. Dessa forma evitaremos a necessidade de atualizar o nome do arquivo quando acessarmos o projeto em diferentes computadores. Verifique o exemplo 'ex01a_ReadingPLGFile.m' na linha 15 do script.

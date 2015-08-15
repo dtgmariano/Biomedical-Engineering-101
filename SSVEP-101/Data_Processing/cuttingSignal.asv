@@ -1,0 +1,100 @@
+clear all
+clc
+
+%Butterworth Filter Parameters
+n = 5; 
+Wn = [1 90]/(200/2);
+[b,a] = butter(n,Wn)
+
+%Data informations
+Fs = 240;   %Sampling Frequency (kHz)
+
+%File Info
+path = 'Collected_Data\';
+
+%%files = ['p1_f1';
+         'p1_f2';
+         'p1_f3';
+         'p1_trial1_freq1.PLG';
+         'p1_trial1_freq2.PLG';
+         'p1_trial1_freq3.PLG';
+         'p2_trial1_freq1.PLG';
+         'p2_trial1_freq2.PLG';
+         'p2_trial1_freq3.PLG';
+         'p2_trial1_freq4.PLG';
+         'p3_trial1_freq1.PLG';
+         'p3_trial1_freq2.PLG';
+         'p3_trial1_freq3.PLG';
+         'p3_trial1_freq4.PLG'];
+     
+fileIndex = 1;
+%%fileName = files(fileIndex,:);
+
+data = funcReadPLG(strcat(path,fileName));
+trigger = data(23,:);
+
+%%
+
+channelsList = [8, 16, 20]; %signal channels: o1, o2 and oz
+channel = 8;
+
+flag = false;
+j = 1;
+for i = 1:size(trigger,2)
+    if (flag==false) && (trigger(i)==4)
+        flag = true;
+        points(j) = i;
+        j = j+1;
+    end
+    
+    if (flag==true) && (trigger(i)==0)
+        flag = false;
+        points(j) = i;
+        j = j+1;
+    end
+end
+
+
+
+%%Extraindo T(on) e T(off) do trigger
+
+%for i = points(1):points(2)
+%    if trigger(i) == 4
+%        tgg = trigger(:,i:points(2)-1);
+%        break;
+%    end
+%end
+
+
+signal = data(channel,:);
+x = 1:size(signal,2);
+cut_signal = signal(1, points(1): points(2));
+xcut = 1:size(cut_signal,2);
+
+figure(2)
+subplot(2,1,1)
+plot(x, (trigger/100),'r', x, signal, 'b')
+subplot(2,1,2)
+plot(xcut, (trigger(1,points(1):points(2))/100), 'r', xcut, cut_signal, 'b')
+
+fsignal = filtfilt(b,a, cut_signal);
+
+
+length = size(fsignal,2);
+NFFT = 2^nextpow2(length);
+f = Fs/2*linspace(0,1,NFFT/2+1);
+Y = fft(fsignal, NFFT)/length;
+
+figure(3)
+subplot(2,1,1)
+plot(fsignal)
+subplot(2,1,2)
+plot(f,2*abs(Y(1:NFFT/2+1)))
+
+
+
+
+
+
+
+
